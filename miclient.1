@@ -1,0 +1,70 @@
+.\"Modified from man(1) of FreeBSD, the NetBSD mdoc.template, and mdoc.samples.
+.\"See Also:
+.\"man mdoc.samples for a complete listing of options
+.\"man mdoc for the short list of editing options
+.\"/usr/share/misc/mdoc.template
+.Dd 05/03/30               \" DATE 
+.Dt miclient 1      \" Program name and manual section number 
+.Os Darwin
+.Sh NAME                 \" Section Header - required - don't modify 
+.Nm miclient
+.\" The following lines are read in generating the apropos(man -k) database. Use only key
+.\" words here as the database is built based on the words here and in the .ND line. 
+.\".Nm Other_name_for_same_program(),
+.\".Nm Yet another name for the same program.
+.\" Use .Nm macro to designate other names for the documented program.
+.Nd open file with mi and select a specified line.
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm
+.Op Fl b              \" [-b]
+.Op Ar line              \" [file]
+.Ar file                 \" Underlined argument - use .Ar anywhere to underline
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+.Nm 
+open 
+.Ar file 
+with the text editor "mi" and jump (and select) a specified 
+.Ar line.
+The option -b is to set a bookmark with emulating key typing Command-B before select the specified 
+.Ar line. 
+This feasure help to quickly back to previous line position.
+.Nm 
+aims to bridge shell command line tools between mi in MacOS X GUI. 
+.Pp                      \" Inserts a space
+.Bl -tag -width -indent  \" Differs from above in tag removed 
+.It Fl b
+emulating key typing Command-B to set a bookmark in opened file before jumping to specified
+.Ar line.
+.El                      \" Ends the list
+.Pp
+.\" .Sh ENVIRONMENT      \" May not be needed
+.\" .Bl -tag -width "ENV_VAR_1" -indent \" ENV_VAR_1 is width of the string ENV_VAR_1
+.\" .It Ev ENV_VAR_1
+.\" Description of ENV_VAR_1
+.\" .It Ev ENV_VAR_2
+.\" Description of ENV_VAR_2
+.\" .El                      
+.\".Sh FILES                \" File used or created by the topic of the man page
+.\".Bl -tag -width "/Users/joeuser/Library/really_long_file_name" -compact
+.\".It Pa /usr/share/file_name
+.\"FILE_1description
+.\".It Pa /Users/joeuser/Library/really_long_file_name
+.\"FILE_2 description
+.\".El
+.\" .Sh DIAGNOSTICS       \" May not be needed
+.\" .Bl -diag
+.\" .It Diagnostic Tag
+.\" Diagnostic informtion here.
+.\" .It Diagnostic Tag
+.\" Diagnostic informtion here.
+.\" .El
+.\".Sh SEE ALSO 
+.\" List links in ascending order by section, alphabetically within a section.
+.\" Please do not reference files that do not exist without filing a bug report
+.\".Xr a 1 , 
+.\".Xr b 2 ,
+.\".Xr b 3 
+.Sh AUTHOR
+Wirtten by Tetsuro KURITA (scriptfactory@mac.com).
+.\" .Sh BUGS              \" Document known, unremedied bugs 
+.\" .Sh HISTORY           \" Document history if command behaves in a unique manner 

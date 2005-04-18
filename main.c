@@ -202,6 +202,7 @@ int main (int argc, char * const argv[]) {
 			if (bFlag) {
 				//printf("will type Command-B\n");
 				typeCommandB();
+				usleep(10000);
 			}
 		}
 		if (parIndex != NULL) {

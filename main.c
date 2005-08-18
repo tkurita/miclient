@@ -2,6 +2,8 @@
 #include <ApplicationServices/ApplicationServices.h>
 #include <unistd.h>
 
+#define useLog 0 //Yes:1, No:0
+
 void show(CFStringRef formatString, ...) {
     CFStringRef resultString;
     CFDataRef data;
@@ -69,20 +71,11 @@ CFDictionaryRef getProcessInfoForCreator(OSType theSignature) {
 			isSameSignature = CFStringCompare (fileCreator,targetCreator,0);
 			//printf("compare success\n");
 			if (isSameSignature == kCFCompareEqualTo) {
-				//printf("mi fournd\n");
+#if useLog
+				printf("mi fournd\n");
+#endif
 				isFound = true;
 				break;
-			}
-			else{
-				/* perhaps fileCreator should not release, because fileCreator is a part of pDict.If fileCreator is released, releaseing pDict is failed.
-				*/
-				/*
-				printf("before repealsing fileCreator\n");
-				if (fileCreator != NULL) {
-					CFRelease(fileCreator);
-				}
-				printf("success releasing fileCreator\n");
-				*/
 			}
 		}
 		//show(CFSTR("Dictionary: %@"), pDict);
@@ -96,7 +89,9 @@ CFDictionaryRef getProcessInfoForCreator(OSType theSignature) {
 		return pDict;
 	}
 	else{
-		//printf("NULL will be retruned\n");
+#if useLog
+		printf("NULL will be retruned\n");
+#endif
 		return NULL;
 	}
 }
@@ -161,7 +156,9 @@ int main (int argc, char * const argv[]) {
 	/* check mi process */
 	OSType miSignature = 'MMKE';
 	
-	//printf("before getProcessInfoForCreator\n");
+#if useLog
+	printf("before getProcessInfoForCreator\n");
+#endif
 	CFDictionaryRef pDict = getProcessInfoForCreator(miSignature);
 	//printf("after getProcessInfoForCreator\n");
 	if (pDict == NULL) {

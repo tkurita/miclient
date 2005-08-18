@@ -102,7 +102,8 @@ CFDictionaryRef getProcessInfoForCreator(OSType theSignature) {
 }
 
 void usage() {
-	fprintf(stderr, "Usage: miclient [-b] [line] file \n");
+	//fprintf(stderr, "Usage: miclient [-b] [line] file \n");
+	printf("Usage: miclient [-b] [line] file \n");
 	exit(-1);
 }
 
@@ -152,7 +153,8 @@ int main (int argc, char * const argv[]) {
 	
 	err = FSPathMakeRef ((UInt8 *) filePath, &fileRef, NULL);
 	if (err != noErr) {
-		fprintf(stderr,"%s is not found.\n",filePath);
+		//fprintf(stderr,"%s is not found.\n",filePath);
+		printf("Error in miclient : %s is not found.\n",filePath);
 		exit(-1);
 	}
 	
@@ -167,7 +169,7 @@ int main (int argc, char * const argv[]) {
 		launchWithMiSpec.launchFlags = kLSLaunchDefaults;
 		err = LSFindApplicationForInfo (miSignature, NULL, CFSTR("mi"), &appRef, &miAppURL);
 		if (err != noErr ) {
-			fprintf(stderr,"application mi could not be found.\n");
+			printf("Error in miclient : The Application mi could not be found.\n");
 			exit(-1);
 		}
 	}

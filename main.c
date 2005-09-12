@@ -203,7 +203,7 @@ int main (int argc, char * const argv[]) {
 			if (bFlag) {
 				//printf("will type Command-B\n");
 				typeCommandB();
-				usleep(50000);
+				usleep(100000);
 			}			
 			err = selectParagraphOfmi(parIndex);
 		}

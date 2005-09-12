@@ -198,13 +198,13 @@ int main (int argc, char * const argv[]) {
 			CFNumberGetValue(CFDictionaryGetValue(pDict,CFSTR("PSN")),
 				 kCFNumberLongLongType,&psn);
 			SetFrontProcessWithOptions(&psn,kSetFrontProcessFrontWindowOnly);
+		}
+		if (parIndex != NULL) {
 			if (bFlag) {
 				//printf("will type Command-B\n");
 				typeCommandB();
-				usleep(10000);
-			}
-		}
-		if (parIndex != NULL) {
+				usleep(50000);
+			}			
 			err = selectParagraphOfmi(parIndex);
 		}
 	}

@@ -119,7 +119,7 @@ int main (int argc, char * const argv[]) {
 		optarg	=	NULL;
 	}
 	
-	long parIndex = NULL;
+	long parIndex = 0;
 	char * filePath;
 	
 	if (optind < argc) {
@@ -175,7 +175,7 @@ int main (int argc, char * const argv[]) {
 		launchWithMiSpec.launchFlags = kLSLaunchDontSwitch;
 		//launchWithMiSpec.launchFlags = kLSLaunchDefaults;
 		CFStringRef theBundlePath = CFDictionaryGetValue(pDict,CFSTR("BundlePath"));
-		miAppURL = CFURLCreateWithFileSystemPath(NULL,theBundlePath,kCFURLPOSIXPathStyle, NULL);
+		miAppURL = CFURLCreateWithFileSystemPath(NULL,theBundlePath,kCFURLPOSIXPathStyle, false);
 		//show(CFSTR("theBundlePath: %@"), theBundlePath);
 		CFRelease(theBundlePath);
 	}
@@ -199,7 +199,7 @@ int main (int argc, char * const argv[]) {
 				 kCFNumberLongLongType,&psn);
 			SetFrontProcessWithOptions(&psn,kSetFrontProcessFrontWindowOnly);
 		}
-		if (parIndex != NULL) {
+		if (parIndex != 0) {
 			if (bFlag) {
 				//printf("will type Command-B\n");
 				typeCommandB();

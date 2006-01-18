@@ -212,8 +212,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -312,11 +310,11 @@
 										<key>PBXProjectModuleLabel</key>
 										<string>main.c</string>
 										<key>bookmark</key>
-										<string>2C6CAF6A08D6788F005D5612</string>
+										<string>2CE33A7708FCB501000F406A</string>
 										<key>history</key>
 										<array>
 											<string>2CDD5ABB08B2B8600092E5AD</string>
-											<string>2C6CAF6908D6788F005D5612</string>
+											<string>2CE3387908FC10D3000F406A</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -379,9 +377,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>2C6CAF6B08D6788F005D5612</string>
+				<string>2CE3378C08FBFE50000F406A</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>2C6CAF6C08D6788F005D5612</string>
+				<string>2CE3378D08FBFE50000F406A</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -981,7 +979,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>2C6CAF6D08D6788F005D5612</string>
-				<string>2C6CAF6E08D6788F005D5612</string>
+				<string>2CE3378E08FBFE50000F406A</string>
 				<string>1C78EAB2065D492600B07095</string>
 				<string>1CD052920623707200166675</string>
 			</array>
@@ -990,7 +988,7 @@
 			<key>WindowToolGUID</key>
 			<string>2C6CAF6D08D6788F005D5612</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

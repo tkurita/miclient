@@ -8,8 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		2C15CC2D07F5A7DA00ED64E9 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C15CC2C07F5A7DA00ED64E9 /* ApplicationServices.framework */; };
+		2C16570109F90D7800CE5422 /* miClient.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2C1656FF09F90D7800CE5422 /* miClient.h */; };
+		2C16570209F90D7800CE5422 /* miClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C16570009F90D7800CE5422 /* miClient.m */; };
+		2C16570709F90D8A00CE5422 /* SmartActivate.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C16570409F90D8A00CE5422 /* SmartActivate.c */; };
+		2C16570809F90D8A00CE5422 /* SmartActivate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2C16570509F90D8A00CE5422 /* SmartActivate.h */; };
+		2C16570909F90D8A00CE5422 /* SmartActivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C16570609F90D8A00CE5422 /* SmartActivate.m */; };
+		2C16586D09F914EE00CE5422 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C1657F009F914ED00CE5422 /* Foundation.framework */; };
 		2CD27D9F07F64D520068424F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD27D9E07F64D520068424F /* CoreServices.framework */; };
-		8DD76F770486A8DE00D96B5E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* main.c */; settings = {ATTRIBUTES = (); }; };
+		8DD76F770486A8DE00D96B5E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8DD76F790486A8DE00D96B5E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09AB6884FE841BABC02AAC07 /* CoreFoundation.framework */; };
 		8DD76F7C0486A8DE00D96B5E /* miclient.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859E970290921104C91782 /* miclient.1 */; };
 /* End PBXBuildFile section */
@@ -46,15 +52,23 @@
 			dstSubfolderSpec = 0;
 			files = (
 				8DD76F7C0486A8DE00D96B5E /* miclient.1 in CopyFiles */,
+				2C16570109F90D7800CE5422 /* miClient.h in CopyFiles */,
+				2C16570809F90D8A00CE5422 /* SmartActivate.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		08FB7796FE84155DC02AAC07 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		08FB7796FE84155DC02AAC07 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		09AB6884FE841BABC02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		2C15CC2C07F5A7DA00ED64E9 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
+		2C1656FF09F90D7800CE5422 /* miClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = miClient.h; sourceTree = "<group>"; };
+		2C16570009F90D7800CE5422 /* miClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = miClient.m; sourceTree = "<group>"; };
+		2C16570409F90D8A00CE5422 /* SmartActivate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SmartActivate.c; sourceTree = "<group>"; };
+		2C16570509F90D8A00CE5422 /* SmartActivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmartActivate.h; sourceTree = "<group>"; };
+		2C16570609F90D8A00CE5422 /* SmartActivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmartActivate.m; sourceTree = "<group>"; };
+		2C1657F009F914ED00CE5422 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2CD27D9E07F64D520068424F /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		8DD76F7E0486A8DE00D96B5E /* miclient */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = miclient; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859E970290921104C91782 /* miclient.1 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.man; path = miclient.1; sourceTree = "<group>"; };
@@ -68,6 +82,7 @@
 				8DD76F790486A8DE00D96B5E /* CoreFoundation.framework in Frameworks */,
 				2C15CC2D07F5A7DA00ED64E9 /* ApplicationServices.framework in Frameworks */,
 				2CD27D9F07F64D520068424F /* CoreServices.framework in Frameworks */,
+				2C16586D09F914EE00CE5422 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +92,8 @@
 		08FB7794FE84155DC02AAC07 /* miclient */ = {
 			isa = PBXGroup;
 			children = (
+				2C16570309F90D8A00CE5422 /* SmartAcrivateLib */,
+				2C1656FE09F90D7800CE5422 /* miClientLib */,
 				08FB7795FE84155DC02AAC07 /* Source */,
 				C6859E96029091FE04C91782 /* Documentation */,
 				08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */,
@@ -88,7 +105,7 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				08FB7796FE84155DC02AAC07 /* main.c */,
+				08FB7796FE84155DC02AAC07 /* main.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -96,6 +113,7 @@
 		08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				2C1657F009F914ED00CE5422 /* Foundation.framework */,
 				2CD27D9E07F64D520068424F /* CoreServices.framework */,
 				2C15CC2C07F5A7DA00ED64E9 /* ApplicationServices.framework */,
 				09AB6884FE841BABC02AAC07 /* CoreFoundation.framework */,
@@ -109,6 +127,25 @@
 				8DD76F7E0486A8DE00D96B5E /* miclient */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2C1656FE09F90D7800CE5422 /* miClientLib */ = {
+			isa = PBXGroup;
+			children = (
+				2C1656FF09F90D7800CE5422 /* miClient.h */,
+				2C16570009F90D7800CE5422 /* miClient.m */,
+			);
+			path = miClientLib;
+			sourceTree = "<group>";
+		};
+		2C16570309F90D8A00CE5422 /* SmartAcrivateLib */ = {
+			isa = PBXGroup;
+			children = (
+				2C16570409F90D8A00CE5422 /* SmartActivate.c */,
+				2C16570509F90D8A00CE5422 /* SmartActivate.h */,
+				2C16570609F90D8A00CE5422 /* SmartActivate.m */,
+			);
+			path = SmartAcrivateLib;
 			sourceTree = "<group>";
 		};
 		C6859E96029091FE04C91782 /* Documentation */ = {
@@ -171,7 +208,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DD76F770486A8DE00D96B5E /* main.c in Sources */,
+				8DD76F770486A8DE00D96B5E /* main.m in Sources */,
+				2C16570209F90D7800CE5422 /* miClient.m in Sources */,
+				2C16570709F90D8A00CE5422 /* SmartActivate.c in Sources */,
+				2C16570909F90D8A00CE5422 /* SmartActivate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +256,8 @@
 		2C801AB409ACA8050050C11E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				PREBINDING = NO;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
@@ -228,6 +270,8 @@
 					ppc,
 					i386,
 				);
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				PREBINDING = NO;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
@@ -236,6 +280,8 @@
 		2C801AB609ACA8050050C11E /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				PREBINDING = NO;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};

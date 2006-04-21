@@ -296,7 +296,7 @@
 							<real>210</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>328 220 880 710 0 0 1440 938 </string>
+						<string>66 196 880 710 0 0 1440 938 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -326,11 +326,11 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>2C7DAA1709D8D5AC003D2DDB</string>
+										<string>2C1655FF09F8ED8000CE5422</string>
 										<key>history</key>
 										<array>
 											<string>2C635D4909C2B47700B34B92</string>
-											<string>2C635D4D09C2B47700B34B92</string>
+											<string>2C7DAA1709D8D5AC003D2DDB</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -349,7 +349,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {626, 664}}</string>
 								<key>RubberWindowFrame</key>
-								<string>328 220 880 710 0 0 1440 938 </string>
+								<string>66 196 880 710 0 0 1440 938 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -369,7 +369,7 @@
 								<key>Frame</key>
 								<string>{{0, 669}, {626, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>328 220 880 710 0 0 1440 938 </string>
+								<string>66 196 880 710 0 0 1440 938 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -393,9 +393,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>2C7DAA1809D8D5AC003D2DDB</string>
+				<string>2C16560009F8ED8000CE5422</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>2C7DAA1909D8D5AC003D2DDB</string>
+				<string>2C16560109F8ED8000CE5422</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -532,7 +532,7 @@
 		<string>/Users/tkurita/Dev/Projects/miclient/trunk/miclient.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>328 220 880 710 0 0 1440 938 </string>
+	<string>66 196 880 710 0 0 1440 938 </string>
 	<key>WindowTools</key>
 	<array>
 		<dict>

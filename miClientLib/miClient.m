@@ -105,6 +105,11 @@ OSErr selectParagraphOfmi(long parIndex){
 	return theMode;
 }
 
+- (NSString *)name
+{
+	return @"mi";
+}
+
 - (BOOL)jumpToFile:(FSRef *)pFileRef paragraph:(NSNumber *)npar
 {
 	OSErr err;

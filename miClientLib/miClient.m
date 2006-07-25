@@ -4,8 +4,8 @@
 
 #define useLog 0
 
-const OSType miSignature = 'MMKE';
-
+static NSString *miCreatorCode = @"MMKE";
+static OSType miSignature;
 static AppleEvent event_front_docment_mode;
 
 void typeCommandB() {
@@ -18,10 +18,8 @@ void typeCommandB() {
 
 OSErr selectParagraphOfmi(long parIndex){
 	/* send AppleEvent to me to select paragrah parIndex in Front document*/
-	//OSType miSignature = 'MMKE';
 	AppleEvent event, reply;
 	OSErr err;
-	
 	err = AEBuildAppleEvent(
 							kAEMiscStandards, kAESelect,
 							typeApplSignature, &miSignature, sizeof(miSignature),
@@ -39,6 +37,7 @@ OSErr selectParagraphOfmi(long parIndex){
 
 + (void)initialize
 {
+	miSignature = UTGetOSTypeFromString((CFStringRef)miCreatorCode);
 	OSErr err;
 	AEBuildError buildError;
 	err = AEBuildAppleEvent(
@@ -119,7 +118,7 @@ OSErr selectParagraphOfmi(long parIndex){
 	ProcessSerialNumber psn;	
 	
 	/* check mi process */
-	NSDictionary *pDict = (NSDictionary *)getProcessInfo(CFSTR("MMKE"), nil, nil);
+	NSDictionary *pDict = (NSDictionary *)getProcessInfo((CFStringRef)miCreatorCode, nil, nil);
 		
 	if (pDict == NULL) {
 		/* mi is not launched. */

@@ -58,8 +58,12 @@ OSErr selectParagraphOfmi(long parIndex){
 	AppleEvent reply;
 	OSErr err;
 
-	err = AESendMessage(&event_front_docment_mode,&reply,kAEWaitReply ,30);
-
+	err = AESendMessage(&event_front_docment_mode, &reply, kAEWaitReply, kAEDefaultTimeout);
+	if (err != noErr) {
+		NSLog([NSString stringWithFormat:@"fail to AESendMessage with error : %i", err]);
+		return nil;
+	}
+	
 #if useLog
 	Handle result;
 	OSStatus resultStatus;
@@ -68,7 +72,11 @@ OSErr selectParagraphOfmi(long parIndex){
 #endif
 	
 	AEDesc givenDesc;
-	err = AEGetParamDesc (&reply, keyDirectObject, typeUnicodeText, &givenDesc);
+	err = AEGetParamDesc(&reply, keyDirectObject, typeUnicodeText, &givenDesc);
+	if (err != noErr) {
+		NSLog([NSString stringWithFormat:@"fail to AEGetParamDesc with error : %i", err]);
+		return nil;
+	}
 	
 	Size theLength = AEGetDescDataSize(&givenDesc);
 	UInt8 *theData = malloc(theLength);

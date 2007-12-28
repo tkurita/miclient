@@ -58,7 +58,8 @@ OSErr selectParagraphOfmi(long parIndex){
 	AppleEvent reply;
 	OSErr err;
 
-	err = AESendMessage(&event_front_docment_mode, &reply, kAEWaitReply, kAEDefaultTimeout);
+	//err = AESendMessage(&event_front_docment_mode, &reply, kAEWaitReply, kAEDefaultTimeout);
+	err = AESendMessage(&event_front_docment_mode, &reply, kAEWaitReply, 100);
 	if (err != noErr) {
 		NSLog([NSString stringWithFormat:@"fail to AESendMessage with error : %i", err]);
 		return nil;

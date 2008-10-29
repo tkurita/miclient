@@ -53,6 +53,13 @@ OSErr selectParagraphOfmi(long parIndex){
 	
 }
 
+- (id)init {
+    if (self = [super init]) {
+        useBookmarkBeforeJump = NO;
+    }
+    return self;
+}
+
 - (NSString *)currentDocumentMode
 {
 	AppleEvent reply;

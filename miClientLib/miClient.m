@@ -28,7 +28,7 @@ OSErr selectParagraphOfmi(long parIndex){
 							NULL, /* エラー情報を必要としない */
 							"'----':'obj '{form:indx, want:type(cpar), seld:long(@),from:'obj '{form:indx, want:type(docu), seld:short(1), from:'null'()}}", /* 書式指定文字列 */
 							parIndex); 
-	err = AESendMessage(&event,&reply,kAEWaitReply ,30);
+	err = AESendMessage(&event,&reply,kAEWaitReply ,100);
 	AEDisposeDesc(&reply);
 	return(err);
 }
@@ -118,10 +118,15 @@ OSErr selectParagraphOfmi(long parIndex){
 	return @"mi";
 }
 
+- (void)setUseBookmarkBeforeJump:(BOOL)aFlag
+{
+	useBookmarkBeforeJump = aFlag;
+}
+
 - (BOOL)jumpToFile:(FSRef *)pFileRef paragraph:(NSNumber *)npar
 {
-	OSErr err;
-	
+	//OSErr err;
+	OSStatus err;
 	FSRef appRef;
 	LSLaunchFSRefSpec launchWithMiSpec;
 	ProcessSerialNumber psn;	
@@ -134,17 +139,23 @@ OSErr selectParagraphOfmi(long parIndex){
 		launchWithMiSpec.launchFlags = kLSLaunchDefaults;
 		err = LSFindApplicationForInfo (miSignature, NULL, NULL, &appRef, NULL);
 		if (err != noErr ) {
-			//printf("Error in miclient : The Application mi could not be found.\n");
+			NSLog(@"Error in miclient : The Application mi could not be found. error %d", err);
 			return NO;
 		}
 	}
 	else{
 		/* mi is launched. */
 		launchWithMiSpec.launchFlags = kLSLaunchDontSwitch;
-		//launchWithMiSpec.launchFlags = kLSLaunchDefaults;
-		
-		[[pDict objectForKey:@"PSN"] getValue:&psn];
+		psn = getPSNFromDict((CFDictionaryRef)pDict);
+#if useLog		
+		NSLog(@"pDict : %@", pDict);
+		NSLog(@"PSN high: %d, low: %d", psn.highLongOfPSN, psn.lowLongOfPSN);
+#endif
 		err = GetProcessBundleLocation(&psn, &appRef);
+		if (err != noErr) {
+			NSLog(@"fail to GetProcessBundleLocation with error %d", err);
+			return NO;
+		}
 	}
 		
 	launchWithMiSpec.appRef = &appRef;
@@ -153,28 +164,42 @@ OSErr selectParagraphOfmi(long parIndex){
 	launchWithMiSpec.passThruParams = NULL;
 	
 	err = LSOpenFromRefSpec(&launchWithMiSpec, NULL);
-	BOOL bFlag = YES;
 	if (err == noErr) {
-		//printf("success to launch mi\n");
+#if useLog		
+		printf("success to launch mi\n");
+#endif	
 		if (pDict != NULL) {
-			//printf("mi will be activate\n");
-			SetFrontProcessWithOptions(&psn,kSetFrontProcessFrontWindowOnly);
+#if useLog
+			printf("mi will be activate\n");
+#endif
+			err = SetFrontProcessWithOptions(&psn,kSetFrontProcessFrontWindowOnly);
+			if (err != noErr) {
+				NSLog(@"fail to SetFrontProcessWithOptions with error %d", err);
+				goto bail;
+			}
 		}
 		
 		if (npar != nil) {
 			long parIndex = [npar longValue];
-			if (bFlag) {
-				//printf("will type Command-B\n");
+			if (useBookmarkBeforeJump) {
+#if useLog
+				printf("will type Command-B\n");
+#endif				
 				typeCommandB();
 				usleep(200000);
 			}
-			
 			err = selectParagraphOfmi(parIndex);
+			if ((err != noErr) && (pDict != NULL)) {
+				// when mi is not launched, error -609 occur, but works expected.
+				NSLog(@"fail to selectParagraphOfmi with error %d", err);
+				goto bail;
+			}
 		}
 	}
 	else {
-		//printf("err in launch\n");
+		NSLog(@"Fail to LSOpenFromRefSpec with error %d", err);
 	}
+bail:	
 	[pDict release];
 	
 	return err == noErr;

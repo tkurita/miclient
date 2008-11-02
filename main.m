@@ -58,6 +58,7 @@ int main (int argc, char * const argv[]) {
 	
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	id miclient = [[[miClient alloc] init] autorelease];
+	[miclient setUseBookmarkBeforeJump:bFlag];
 	BOOL isSuccess = [miclient jumpToFile:&fileRef paragraph:[NSNumber numberWithLong:parIndex]];
 	
 	[pool release];

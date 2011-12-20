@@ -68,7 +68,7 @@ OSErr selectParagraphOfmi(long parIndex){
 	//err = AESendMessage(&event_front_docment_mode, &reply, kAEWaitReply, kAEDefaultTimeout);
 	err = AESendMessage(&event_front_docment_mode, &reply, kAEWaitReply, 100);
 	if (err != noErr) {
-		NSLog([NSString stringWithFormat:@"fail to AESendMessage with error : %i", err]);
+		NSLog(@"fail to AESendMessage with error : %i", err);
 		return nil;
 	}
 	
@@ -82,7 +82,7 @@ OSErr selectParagraphOfmi(long parIndex){
 	AEDesc givenDesc;
 	err = AEGetParamDesc(&reply, keyDirectObject, typeUnicodeText, &givenDesc);
 	if (err != noErr) {
-		NSLog([NSString stringWithFormat:@"fail to AEGetParamDesc with error : %i", err]);
+		NSLog(@"fail to AEGetParamDesc with error : %i", err);
 		return nil;
 	}
 	

@@ -7,6 +7,10 @@
 static NSString *miCreatorCode = @"MMKE";
 static OSType miSignature;
 static AppleEvent event_front_docment_mode;
+static AppleEvent event_front_docment_content;
+
+static miClient *SHARED_INSTANCE = nil;
+
 
 void typeCommandB() {
 	/* emulate keytype of pressing Cmd-B */
@@ -51,13 +55,77 @@ OSErr selectParagraphOfmi(long parIndex){
 	printf("build error error code:%d error pos:%d\n", buildError.fError, buildError.fErrorPos);
 #endif
 	
+	err = AEBuildAppleEvent(
+							kAECoreSuite, kAEGetData,
+							typeApplSignature, &miSignature, sizeof(miSignature),
+							kAutoGenerateReturnID, kAnyTransactionID,
+							&event_front_docment_content, /* 作成するイベント */
+							&buildError, /* エラー情報を必要としない */
+							"'----':'obj '{form:prop, want:type(prop),seld:type(pcnt),from:'obj '{form:indx,want:type(docu), seld:short(1), from:'null'()}}");	
+	
 }
+
++ (miClient *)sharedClient
+{
+	@synchronized(self) {  
+        if (SHARED_INSTANCE == nil) {  
+            SHARED_INSTANCE = [[self alloc] init];  
+        }  
+    }
+	return SHARED_INSTANCE;
+}
+
++ (id)allocWithZone:(NSZone *)zone {  
+    @synchronized(self) {  
+        if (SHARED_INSTANCE == nil) {  
+            SHARED_INSTANCE = [super allocWithZone:zone];  
+            return SHARED_INSTANCE;  
+        }  
+    }  
+    return nil;  
+}  
+
+- (id)copyWithZone:(NSZone*)zone {  
+    return self;  // シングルトン状態を保持するため何もせず self を返す  
+}  
+
+- (id)retain {  
+    return self;  // シングルトン状態を保持するため何もせず self を返す  
+}  
+
+- (unsigned)retainCount {  
+    return UINT_MAX;  // 解放できないインスタンスを表すため unsigned int 値の最大値 UINT_MAX を返す  
+}  
+
+- (void)release {  
+    // シングルトン状態を保持するため何もしない  
+}  
+
+- (id)autorelease {  
+    return self;  // シングルトン状態を保持するため何もせず self を返す  
+}  
 
 - (id)init {
     if (self = [super init]) {
         useBookmarkBeforeJump = NO;
     }
     return self;
+}
+
+- (NSString *)currentDocumentContent
+{
+	AppleEvent reply;
+	OSErr err;
+	
+	err = AESendMessage(&event_front_docment_content, &reply, kAEWaitReply, kAEDefaultTimeout);
+	if (err != noErr) {
+		NSLog(@"fail to AESendMessage with error : %i", err);
+		return nil;
+	}
+	
+	NSAppleEventDescriptor *appevent = [[[NSAppleEventDescriptor alloc] initWithAEDescNoCopy:&reply] 
+										autorelease];
+	return [[appevent descriptorForKeyword:keyDirectObject] stringValue];
 }
 
 - (NSString *)currentDocumentMode

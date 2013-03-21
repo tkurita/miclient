@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -159,9 +159,18 @@
 		08FB7793FE84155DC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 2C801AB309ACA8050050C11E /* Build configuration list for PBXProject "miclient" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 08FB7794FE84155DC02AAC07 /* miclient */;
 			projectDirPath = "";
+			projectRoot = "";
 			targets = (
 				8DD76F740486A8DE00D96B5E /* miclient */,
 			);
@@ -224,7 +233,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = macosx10.4;
 			};
 			name = Debug;
 		};
@@ -232,13 +241,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
+					ppc64,
 					ppc,
+					x86_64,
 					i386,
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				"GCC_VERSION[sdk=macosx10.4][arch=*]" = 4.0;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = macosx10.4;
+				"SDKROOT[arch=ppc64]" = macosx10.5;
+				"SDKROOT[arch=x86_64]" = macosx10.5;
 			};
 			name = Release;
 		};
@@ -248,7 +262,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = macosx10.4;
 			};
 			name = Default;
 		};

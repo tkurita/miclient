@@ -2,6 +2,10 @@
 #import "SmartActivate.h"
 #include <unistd.h>
 
+#if !defined(__LP64__)
+typedef unsigned int NSUInteger;
+#endif
+
 #define useLog 0
 
 static NSString *miCreatorCode = @"MMKE";
@@ -93,7 +97,7 @@ OSErr selectParagraphOfmi(long parIndex){
     return self;  // シングルトン状態を保持するため何もせず self を返す  
 }  
 
-- (unsigned)retainCount {  
+- (NSUInteger)retainCount {  
     return UINT_MAX;  // 解放できないインスタンスを表すため unsigned int 値の最大値 UINT_MAX を返す  
 }  
 

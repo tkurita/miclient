@@ -1,5 +1,5 @@
 #import "miClient.h"
-#import "SmartActivate.h"
+#import <Carbon/Carbon.h>
 #include <unistd.h>
 
 #if !defined(__LP64__)
@@ -9,6 +9,7 @@ typedef unsigned int NSUInteger;
 #define useLog 0
 
 static NSString *miCreatorCode = @"MMKE";
+static NSString *miID = @"net.mimikaki.mi";
 static OSType miSignature;
 static AppleEvent event_front_docment_mode;
 static AppleEvent event_front_docment_content;
@@ -18,10 +19,17 @@ static miClient *SHARED_INSTANCE = nil;
 
 void typeCommandB() {
 	/* emulate keytype of pressing Cmd-B */
-	CGPostKeyboardEvent( (CGCharCode)0, (CGKeyCode)55, true );
-	CGPostKeyboardEvent( (CGCharCode)'B', (CGKeyCode)11, true );
-	CGPostKeyboardEvent( (CGCharCode)'B', (CGKeyCode)11, false );
-	CGPostKeyboardEvent( (CGCharCode)0, (CGKeyCode)55, false );
+    
+    CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
+    
+    CGEventRef kev_b = CGEventCreateKeyboardEvent(source, kVK_ANSI_B, true);
+    CGEventSetFlags(kev_b, kCGEventFlagMaskCommand);
+    CGEventTapLocation location = kCGHIDEventTap;
+    
+    CGEventPost(location, kev_b);
+    
+    CFRelease(kev_b);
+    CFRelease(source);
 }
 
 OSErr selectParagraphOfmi(long parIndex){
@@ -45,7 +53,7 @@ OSErr selectParagraphOfmi(long parIndex){
 
 + (void)initialize
 {
-	miSignature = UTGetOSTypeFromString((CFStringRef)miCreatorCode);
+	miSignature = UTGetOSTypeFromString((__bridge CFStringRef)miCreatorCode);
 	OSErr err;
 	AEBuildError buildError;
 	err = AEBuildAppleEvent(
@@ -73,7 +81,7 @@ OSErr selectParagraphOfmi(long parIndex){
 {
 	@synchronized(self) {  
         if (SHARED_INSTANCE == nil) {  
-            SHARED_INSTANCE = [[self alloc] init];  
+            (void)[[self alloc] init];
         }  
     }
 	return SHARED_INSTANCE;
@@ -90,22 +98,6 @@ OSErr selectParagraphOfmi(long parIndex){
 }  
 
 - (id)copyWithZone:(NSZone*)zone {  
-    return self;  // シングルトン状態を保持するため何もせず self を返す  
-}  
-
-- (id)retain {  
-    return self;  // シングルトン状態を保持するため何もせず self を返す  
-}  
-
-- (NSUInteger)retainCount {  
-    return UINT_MAX;  // 解放できないインスタンスを表すため unsigned int 値の最大値 UINT_MAX を返す  
-}  
-
-- (void)release {  
-    // シングルトン状態を保持するため何もしない  
-}  
-
-- (id)autorelease {  
     return self;  // シングルトン状態を保持するため何もせず self を返す  
 }  
 
@@ -127,8 +119,7 @@ OSErr selectParagraphOfmi(long parIndex){
 		return nil;
 	}
 	
-	NSAppleEventDescriptor *appevent = [[[NSAppleEventDescriptor alloc] initWithAEDescNoCopy:&reply] 
-										autorelease];
+	NSAppleEventDescriptor *appevent = [[NSAppleEventDescriptor alloc] initWithAEDescNoCopy:&reply];
 	return [[appevent descriptorForKeyword:keyDirectObject] stringValue];
 }
 
@@ -181,7 +172,7 @@ OSErr selectParagraphOfmi(long parIndex){
 	
 	NSString *theMode = [NSString stringWithCharacters:(unichar *)theData length:theLength/sizeof(unichar)];
 #if useLog
-	NSLog(theMode);
+	NSLog(@"%@", theMode);
 #endif
 	AEDisposeDesc(&reply);
 	free(theData);
@@ -202,60 +193,50 @@ OSErr selectParagraphOfmi(long parIndex){
 	useBookmarkBeforeJump = aFlag;
 }
 
-- (BOOL)jumpToFile:(FSRef *)pFileRef paragraph:(NSNumber *)npar
+- (BOOL)jumpToFileURL:(NSURL *)url paragraph:(NSNumber *)npar
 {
 	//OSErr err;
 	OSStatus err;
-	FSRef appRef;
-	LSLaunchFSRefSpec launchWithMiSpec;
-	ProcessSerialNumber psn;	
+	LSLaunchURLSpec launchWithMiSpec;
 	
 	/* check mi process */
-	NSDictionary *pDict = (NSDictionary *)getProcessInfo((CFStringRef)miCreatorCode, nil, nil);
-		
-	if (pDict == NULL) {
-		/* mi is not launched. */
-		launchWithMiSpec.launchFlags = kLSLaunchDefaults;
-		err = LSFindApplicationForInfo (miSignature, NULL, NULL, &appRef, NULL);
-		if (err != noErr ) {
-			NSLog(@"Error in miclient : The Application mi could not be found. error %d", err);
+    NSURL *mi_url = nil;
+    NSArray *apps = [NSRunningApplication runningApplicationsWithBundleIdentifier:miID];
+    NSRunningApplication *mi_process = nil;
+    if (apps.count) {
+        /* mi is launched. */
+        mi_process = [apps lastObject];
+        mi_url = [mi_process bundleURL];
+ 		launchWithMiSpec.launchFlags = kLSLaunchDontSwitch;
+    } else {
+  		launchWithMiSpec.launchFlags = kLSLaunchDefaults;
+		NSString *app_path = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:miID];
+		if (!app_path ) {
+			NSLog(@"Error in miclient : Can't find an application of the identifier : %@", miID);
 			return NO;
 		}
-	}
-	else{
-		/* mi is launched. */
-		launchWithMiSpec.launchFlags = kLSLaunchDontSwitch;
-		psn = getPSNFromDict((CFDictionaryRef)pDict);
-#if useLog		
-		NSLog(@"pDict : %@", pDict);
-		NSLog(@"PSN high: %d, low: %d", psn.highLongOfPSN, psn.lowLongOfPSN);
-#endif
-		err = GetProcessBundleLocation(&psn, &appRef);
-		if (err != noErr) {
-			NSLog(@"fail to GetProcessBundleLocation with error %d", err);
-			return NO;
-		}
-	}
-		
-	launchWithMiSpec.appRef = &appRef;
-	launchWithMiSpec.numDocs = 1;
-	launchWithMiSpec.itemRefs = pFileRef;
+        mi_url = [NSURL fileURLWithPath:app_path];
+    }
+    
+	launchWithMiSpec.appURL = (__bridge CFURLRef)(mi_url);
+	launchWithMiSpec.itemURLs = (__bridge CFArrayRef)([NSArray arrayWithObject:url]);
 	launchWithMiSpec.passThruParams = NULL;
-	
-	err = LSOpenFromRefSpec(&launchWithMiSpec, NULL);
+	launchWithMiSpec.asyncRefCon = NULL;
+    
+	err = LSOpenFromURLSpec(&launchWithMiSpec, NULL);
 	if (err == noErr) {
-#if useLog		
-		printf("success to launch mi\n");
-#endif	
-		if (pDict != NULL) {
 #if useLog
-			printf("mi will be activate\n");
+		printf("success to launch mi\n");
 #endif
-			err = SetFrontProcessWithOptions(&psn,kSetFrontProcessFrontWindowOnly);
-			if (err != noErr) {
-				NSLog(@"fail to SetFrontProcessWithOptions with error %d", err);
-				goto bail;
-			}
+		if (mi_process) {
+#if useLog
+			NSLog(@"mi will be activate : %@", mi_process);
+#endif
+			if (![mi_process activateWithOptions:NSApplicationActivateIgnoringOtherApps] ) {
+                // does not work without NSApplicationActivateIgnoringOtherApps option.
+                NSLog(@"%@", @"fail to activate mi process");
+                return NO;
+            }
 		}
 		
 		if (npar != nil) {
@@ -263,12 +244,12 @@ OSErr selectParagraphOfmi(long parIndex){
 			if (useBookmarkBeforeJump) {
 #if useLog
 				printf("will type Command-B\n");
-#endif				
+#endif
 				typeCommandB();
 				usleep(200000);
 			}
 			err = selectParagraphOfmi(parIndex);
-			if ((err != noErr) && (pDict != NULL)) {
+			if ((err != noErr) && (mi_process)) {
 				// when mi is not launched, error -609 occur, but works expected.
 				NSLog(@"fail to selectParagraphOfmi with error %d", err);
 				goto bail;
@@ -276,11 +257,9 @@ OSErr selectParagraphOfmi(long parIndex){
 		}
 	}
 	else {
-		NSLog(@"Fail to LSOpenFromRefSpec with error %d", err);
+		NSLog(@"Fail to LSOpenFromURLSpec with error %d", err);
 	}
-bail:	
-	[pDict release];
-	
+bail:
 	return err == noErr;
 }
 

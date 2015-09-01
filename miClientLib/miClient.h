@@ -6,10 +6,10 @@
 }
 + (miClient *)sharedClient;
 
--(BOOL) jumpToFile:(FSRef *)pFileRef paragraph:(NSNumber *)npar;
--(NSString *) currentDocumentMode;
--(NSString *) name;
--(void)setUseBookmarkBeforeJump:(BOOL)aFlag;
+- (BOOL)jumpToFileURL:(NSURL *)url paragraph:(NSNumber *)npar;
+- (NSString *) currentDocumentMode;
+- (NSString *) name;
+- (void)setUseBookmarkBeforeJump:(BOOL)aFlag;
 - (NSString *)currentDocumentContent;
 
 @end

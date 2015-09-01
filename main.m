@@ -48,20 +48,26 @@ int main (int argc, char * const argv[]) {
 	}
 		
 	/* check file path */
-	FSRef fileRef;	
+	/*
+    FSRef fileRef;
 	OSErr err = FSPathMakeRef ((UInt8 *) filePath, &fileRef, NULL);
 	if (err != noErr) {
 		//fprintf(stderr,"%s is not found.\n",filePath);
-		printf("Error in miclient : %s is not found.\n",filePath);
+		printf("Error in miclient : %s is not found.\n", filePath);
 		exit(-1);
 	}
-	
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-	id miclient = [[[miClient alloc] init] autorelease];
-	[miclient setUseBookmarkBeforeJump:bFlag];
-	BOOL isSuccess = [miclient jumpToFile:&fileRef paragraph:[NSNumber numberWithLong:parIndex]];
-	
-	[pool release];
+     */
+    BOOL isSuccess;
+	@autoreleasepool {
+        NSString *path = [NSString stringWithCString:filePath encoding:NSUTF8StringEncoding];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+            exit(-1);
+        }
+        NSURL *url = [NSURL fileURLWithPath:path];
+        id miclient = [miClient new];
+        [miclient setUseBookmarkBeforeJump:bFlag];
+        isSuccess = [miclient jumpToFileURL:url paragraph:[NSNumber numberWithLong:parIndex]];
+	}
 	if (isSuccess)
 		return 0;
 	else

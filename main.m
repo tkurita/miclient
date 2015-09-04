@@ -6,7 +6,7 @@
 
 void usage() {
 	//fprintf(stderr, "Usage: miclient [-b] [line] file \n");
-	printf("Usage: miclient [-b] [line] file \n");
+	printf("Usage: miclient [-v] [-b] [line] file \n");
 	exit(-1);
 }
 
@@ -17,9 +17,13 @@ int main (int argc, char * const argv[]) {
 	
 	/* get arguments */
 	Boolean bFlag = false;
-	while(getopt(argc, argv, "b") != -1 ){
+	while(getopt(argc, argv, "bv") != -1 ){
 		switch(optopt){
 			case 'b': bFlag = true ; break;
+            case 'v':
+                printf("miclient, version 2.1\n");
+                exit(0);
+                break;
 			case '?':
 			default	:
 				usage(); break;
@@ -46,17 +50,7 @@ int main (int argc, char * const argv[]) {
 	else {
 		usage();
 	}
-		
-	/* check file path */
-	/*
-    FSRef fileRef;
-	OSErr err = FSPathMakeRef ((UInt8 *) filePath, &fileRef, NULL);
-	if (err != noErr) {
-		//fprintf(stderr,"%s is not found.\n",filePath);
-		printf("Error in miclient : %s is not found.\n", filePath);
-		exit(-1);
-	}
-     */
+    
     BOOL isSuccess;
 	@autoreleasepool {
         NSString *path = [NSString stringWithCString:filePath encoding:NSUTF8StringEncoding];

@@ -163,7 +163,7 @@ OSErr selectParagraphOfmi(long parIndex){
 		//err = -1701 : No documents
 		free(theData);
 		AEDisposeDesc(&reply);
-		NSDictionary *info = @{@"result code": [NSNumber numberWithInt:err]};
+		NSDictionary *info = @{@"result code": @(err)};
 		NSException *exception = [NSException exceptionWithName:@"miClientException"
 												reason:@"Can't get document mode" userInfo:info];
 		@throw exception;

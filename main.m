@@ -53,14 +53,14 @@ int main (int argc, char * const argv[]) {
     
     BOOL isSuccess;
 	@autoreleasepool {
-        NSString *path = [NSString stringWithCString:filePath encoding:NSUTF8StringEncoding];
+        NSString *path = @(filePath);
         if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
             exit(-1);
         }
         NSURL *url = [NSURL fileURLWithPath:path];
         id miclient = [miClient new];
         [miclient setUseBookmarkBeforeJump:bFlag];
-        isSuccess = [miclient jumpToFileURL:url paragraph:[NSNumber numberWithLong:parIndex]];
+        isSuccess = [miclient jumpToFileURL:url paragraph:@(parIndex)];
 	}
 	if (isSuccess)
 		return 0;

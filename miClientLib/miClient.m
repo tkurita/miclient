@@ -163,7 +163,7 @@ OSErr selectParagraphOfmi(long parIndex){
 		//err = -1701 : No documents
 		free(theData);
 		AEDisposeDesc(&reply);
-		NSDictionary *info = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:err] forKey:@"result code"];
+		NSDictionary *info = @{@"result code": [NSNumber numberWithInt:err]};
 		NSException *exception = [NSException exceptionWithName:@"miClientException"
 												reason:@"Can't get document mode" userInfo:info];
 		@throw exception;
@@ -219,7 +219,7 @@ OSErr selectParagraphOfmi(long parIndex){
     }
     
 	launchWithMiSpec.appURL = (__bridge CFURLRef)(mi_url);
-	launchWithMiSpec.itemURLs = (__bridge CFArrayRef)([NSArray arrayWithObject:url]);
+	launchWithMiSpec.itemURLs = (__bridge CFArrayRef)(@[url]);
 	launchWithMiSpec.passThruParams = NULL;
 	launchWithMiSpec.asyncRefCon = NULL;
     

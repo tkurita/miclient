@@ -195,72 +195,32 @@ OSErr selectParagraphOfmi(long parIndex){
 
 - (BOOL)jumpToFileURL:(NSURL *)url paragraph:(NSNumber *)npar
 {
-	//OSErr err;
-	OSStatus err;
-	LSLaunchURLSpec launchWithMiSpec;
 	
-	/* check mi process */
-    NSURL *mi_url = nil;
-    NSArray *apps = [NSRunningApplication runningApplicationsWithBundleIdentifier:miID];
-    NSRunningApplication *mi_process = nil;
-    if (apps.count) {
-        /* mi is launched. */
-        mi_process = [apps lastObject];
-        mi_url = [mi_process bundleURL];
- 		launchWithMiSpec.launchFlags = kLSLaunchDontSwitch;
-    } else {
-  		launchWithMiSpec.launchFlags = kLSLaunchDefaults;
-		NSString *app_path = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:miID];
-		if (!app_path ) {
-			NSLog(@"Error in miclient : Can't find an application of the identifier : %@", miID);
-			return NO;
-		}
-        mi_url = [NSURL fileURLWithPath:app_path];
-    }
-    
-	launchWithMiSpec.appURL = (__bridge CFURLRef)(mi_url);
-	launchWithMiSpec.itemURLs = (__bridge CFArrayRef)(@[url]);
-	launchWithMiSpec.passThruParams = NULL;
-	launchWithMiSpec.asyncRefCon = NULL;
-    
-	err = LSOpenFromURLSpec(&launchWithMiSpec, NULL);
-	if (err == noErr) {
+    if ([[NSWorkspace sharedWorkspace] openURLs:@[url]
+                    withAppBundleIdentifier:miID
+                        options:NSWorkspaceLaunchDefault additionalEventParamDescriptor:nil
+                              launchIdentifiers:NULL]) {
+        if (npar != nil) {
+            long parIndex = [npar longValue];
+            if (useBookmarkBeforeJump) {
 #if useLog
-		printf("success to launch mi\n");
+                printf("will type Command-B\n");
 #endif
-		if (mi_process) {
-#if useLog
-			NSLog(@"mi will be activate : %@", mi_process);
-#endif
-			if (![mi_process activateWithOptions:NSApplicationActivateIgnoringOtherApps] ) {
-                // does not work without NSApplicationActivateIgnoringOtherApps option.
-                NSLog(@"%@", @"fail to activate mi process");
+                typeCommandB();
+                usleep(200000);
+            }
+            OSStatus err = selectParagraphOfmi(parIndex);
+            if (err != noErr) {
+                // when mi is not launched, error -609 occur, but works expected.
+                NSLog(@"fail to selectParagraphOfmi with error %d", err);
                 return NO;
             }
-		}
-		
-		if (npar != nil) {
-			long parIndex = [npar longValue];
-			if (useBookmarkBeforeJump) {
-#if useLog
-				printf("will type Command-B\n");
-#endif
-				typeCommandB();
-				usleep(200000);
-			}
-			err = selectParagraphOfmi(parIndex);
-			if ((err != noErr) && (mi_process)) {
-				// when mi is not launched, error -609 occur, but works expected.
-				NSLog(@"fail to selectParagraphOfmi with error %d", err);
-				goto bail;
-			}
-		}
-	}
-	else {
-		NSLog(@"Fail to LSOpenFromURLSpec with error %d", err);
-	}
-bail:
-	return err == noErr;
+        }
+ 	} else {
+        NSLog(@"Fail to open a file %@", [url path]);
+        return NO;
+    }
+    return YES;
 }
 
 @end

@@ -193,6 +193,22 @@ OSErr selectParagraphOfmi(long parIndex){
 	useBookmarkBeforeJump = aFlag;
 }
 
+void waitMiActivation()
+{
+    if ([[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
+                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]])
+    {
+        NSString *fornt_app_indentifier = [[[NSWorkspace sharedWorkspace]
+                                            menuBarOwningApplication] bundleIdentifier];
+#if useLog
+        NSLog(@"%@", fornt_app_indentifier);
+#endif
+        if ([fornt_app_indentifier isEqualToString:miID] ) {
+            return;
+        }
+    }
+}
+
 - (BOOL)jumpToFileURL:(NSURL *)url paragraph:(NSNumber *)npar
 {
 	
@@ -201,14 +217,13 @@ OSErr selectParagraphOfmi(long parIndex){
                     withAppBundleIdentifier:miID
                         options:NSWorkspaceLaunchDefault additionalEventParamDescriptor:nil
                               launchIdentifiers:NULL]) {
-        // NSWorkspaceLaunchDefault
         if (npar != nil) {
             long parIndex = [npar longValue];
             if (useBookmarkBeforeJump) {
 #if useLog
                 printf("will type Command-B\n");
 #endif
-                usleep(200000);
+                waitMiActivation();
                 typeCommandB();
                 usleep(200000);
             }

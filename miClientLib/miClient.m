@@ -196,16 +196,19 @@ OSErr selectParagraphOfmi(long parIndex){
 - (BOOL)jumpToFileURL:(NSURL *)url paragraph:(NSNumber *)npar
 {
 	
-    if ([[NSWorkspace sharedWorkspace] openURLs:@[url]
+    NSWorkspace *ws = [NSWorkspace sharedWorkspace];
+    if ([ws openURLs:@[url]
                     withAppBundleIdentifier:miID
                         options:NSWorkspaceLaunchDefault additionalEventParamDescriptor:nil
                               launchIdentifiers:NULL]) {
+        // NSWorkspaceLaunchDefault
         if (npar != nil) {
             long parIndex = [npar longValue];
             if (useBookmarkBeforeJump) {
 #if useLog
                 printf("will type Command-B\n");
 #endif
+                usleep(200000);
                 typeCommandB();
                 usleep(200000);
             }

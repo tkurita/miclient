@@ -32,7 +32,7 @@ int main (int argc, char * const argv[]) {
 	}
 	
 	long parIndex = 0;
-	char * filePath;
+	char * filePath = "";
 	
 	if (optind < argc) {
 		if (argc - optind > 2) {

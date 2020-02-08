@@ -21,7 +21,7 @@ int main (int argc, char * const argv[]) {
 		switch(optopt){
 			case 'b': bFlag = true ; break;
             case 'v':
-                printf("miclient, version 2.1.2\n");
+                printf("miclient, version 2.1.3\n");
                 exit(0);
                 break;
 			case '?':

@@ -25,10 +25,13 @@ void typeCommandB() {
     CGEventRef kev_b = CGEventCreateKeyboardEvent(source, kVK_ANSI_B, true);
     CGEventSetFlags(kev_b, kCGEventFlagMaskCommand);
     CGEventTapLocation location = kCGHIDEventTap;
-    
     CGEventPost(location, kev_b);
-    
     CFRelease(kev_b);
+    
+    CGEventRef kev_up = CGEventCreateKeyboardEvent(source, kVK_ANSI_B, false);
+    CGEventPost(location, kev_up);
+    CFRelease(kev_up);
+    
     CFRelease(source);
 }
 

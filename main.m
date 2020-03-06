@@ -2,12 +2,10 @@
 #import "miClientLib/miClient.h"
 
 #define useLog 0 //Yes:1, No:0
-
+//#define VERSION "2.1.4"
 
 void usage() {
-	//fprintf(stderr, "Usage: miclient [-b] [line] file \n");
-	printf("Usage: miclient [-v] [-b] [line] file \n");
-	exit(-1);
+	printf("Usage: miclient [-h] [-v] [-b] [line] file \n");
 }
 
 extern char *optarg;
@@ -17,16 +15,21 @@ int main (int argc, char * const argv[]) {
 	
 	/* get arguments */
 	Boolean bFlag = false;
-	while(getopt(argc, argv, "bv") != -1 ){
+	while(getopt(argc, argv, "bvh") != -1 ){
 		switch(optopt){
 			case 'b': bFlag = true ; break;
             case 'v':
-                printf("miclient, version 2.1.4\n");
+                printf("miclient, version %s\n", VERSION);
                 exit(0);
                 break;
+            case 'h':
 			case '?':
+                usage();
+                exit(0);
 			default	:
-				usage(); break;
+                usage();
+                exit(-1);
+                break;
 		}
 		optarg	=	NULL;
 	}

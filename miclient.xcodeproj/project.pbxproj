@@ -23,6 +23,7 @@
 		2C1657F009F914ED00CE5422 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2C803ACC1B8E33F600F21455 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		2CD27D9E07F64D520068424F /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
+		2CEA6CB2240FAEC40012CCE7 /* miclient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = miclient.entitlements; sourceTree = "<group>"; };
 		8DD76F7E0486A8DE00D96B5E /* miclient */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = miclient; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859E970290921104C91782 /* miclient.1 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.man; path = miclient.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -44,6 +45,7 @@
 		08FB7794FE84155DC02AAC07 /* miclient */ = {
 			isa = PBXGroup;
 			children = (
+				2CEA6CB2240FAEC40012CCE7 /* miclient.entitlements */,
 				2C1656FE09F90D7800CE5422 /* miClientLib */,
 				08FB7795FE84155DC02AAC07 /* Source */,
 				C6859E96029091FE04C91782 /* Documentation */,
@@ -160,7 +162,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"YES\" != \"${SKIP_INSTALL}\" ];then\ncp ${SRCROOT}/miclient.1 ${DESTROOT}/share/man/man1\nfi";
+			shellScript = "if [ \"YES\" != \"${SKIP_INSTALL}\" ];then\ncp ${SRCROOT}/miclient.1 ${DSTROOT}/local/share/man/man1/  \nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -181,13 +183,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_ENTITLEMENTS = miclient.entitlements;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 5VBC6385DN;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				INSTALL_PATH = "$(HOME)/bin";
+				INSTALL_PATH = /local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = "net-script-factory.miclient";
 				PRODUCT_NAME = miclient;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -197,13 +206,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_ENTITLEMENTS = miclient.entitlements;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = 5VBC6385DN;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				INSTALL_PATH = "$(HOME)/bin";
+				INSTALL_PATH = /local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = "net-script-factory.miclient";
 				PRODUCT_NAME = miclient;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 			};
 			name = Release;
 		};

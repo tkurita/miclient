@@ -21,6 +21,7 @@
 		2C1656FF09F90D7800CE5422 /* miClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = miClient.h; sourceTree = "<group>"; };
 		2C16570009F90D7800CE5422 /* miClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = miClient.m; sourceTree = "<group>"; };
 		2C1657F009F914ED00CE5422 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2C48BEEE24739D40009C035F /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		2C803ACC1B8E33F600F21455 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		2CD27D9E07F64D520068424F /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		2CEA6CB2240FAEC40012CCE7 /* miclient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = miclient.entitlements; sourceTree = "<group>"; };
@@ -49,6 +50,7 @@
 				2C1656FE09F90D7800CE5422 /* miClientLib */,
 				08FB7795FE84155DC02AAC07 /* Source */,
 				C6859E96029091FE04C91782 /* Documentation */,
+				2C48BEEE24739D40009C035F /* Makefile */,
 				08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */,
 				19C28FBDFE9D53C911CA2CBB /* Products */,
 			);
@@ -223,7 +225,7 @@
 				PRODUCT_VERSION = 2.1.4;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
